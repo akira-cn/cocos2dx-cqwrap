@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5DCD58A8-541C-49EC-B90C-530929B35962}</ProjectGuid>
+    <ProjectName>libCqwrap</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src;$(ProjectDir)..\src\third_party\json\include;$(ProjectDir)..\src\third_party\json\include\json;$(ProjectDir)..\src\third_party\websockets\lib;$(ProjectDir)..\src\third_party\websockets\win32port\win32helpers;$(ProjectDir)..\src\third_party\vld\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)cocos2dx\platform\third_party\win32\pthread;$(SolutionDir)CocosDenshion\include;$(SolutionDir)extensions;$(SolutionDir)external\chipmunk\include\chipmunk;$(SolutionDir)scripting\javascript\bindings;$(SolutionDir)scripting\javascript\spidermonkey-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>true</MinimalRebuild>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcocos2d.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;libExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName>libWeizoo.h</HeaderFileName>
+      <InterfaceIdentifierFileName>libWeizoo_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>libWeizoo_p.c</ProxyFileName>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)/libWeizoo.tlb</TypeLibraryName>
+      <DllDataFileName />
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;..\Classes;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ExceptionHandling />
+      <DebugInformationFormat />
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGSNDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcocos2d.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName>libWeizoo.h</HeaderFileName>
+      <InterfaceIdentifierFileName>libWeizoo_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>libWeizoo_p.c</ProxyFileName>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)/libWeizoo.tlb</TypeLibraryName>
+      <DllDataFileName />
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Image Include="..\assets\CloseNormal.png" />
+    <Image Include="..\assets\CloseSelected.png" />
+    <Image Include="..\assets\HelloWorld.png" />
+    <Image Include="res\libWeizoo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="libWeizoo.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\pattern\CustEvent.cpp" />
+    <ClCompile Include="..\src\scripting\cqwrap_websock_manual.cpp" />
+    <ClCompile Include="..\src\third_party\json\src\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\src\third_party\json\src\lib_json\json_value.cpp" />
+    <ClCompile Include="..\src\third_party\json\src\lib_json\json_writer.cpp" />
+    <ClCompile Include="..\src\third_party\websockets\lib\base64-decode.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\client-handshake.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\client-parser.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\client.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\extension-deflate-frame.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\extension-deflate-stream.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\extension.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\handshake.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\libwebsockets.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\md5.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\output.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\parsers.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\server-handshake.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\server.c" />
+    <ClCompile Include="..\src\third_party\websockets\lib\sha-1.c" />
+    <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\getopt.c" />
+    <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\getopt_long.c" />
+    <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\gettimeofday.c" />
+    <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\websock-w32.c" />
+    <ClCompile Include="..\src\util\JsonHelper.cpp" />
+    <ClCompile Include="..\src\util\WebSocket.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\pattern\CustEvent.h" />
+    <ClInclude Include="..\src\pattern\Singleton.h" />
+    <ClInclude Include="..\src\scripting\cqwrap_register_all_manual.h" />
+    <ClInclude Include="..\src\third_party\json\include\json\autolink.h" />
+    <ClInclude Include="..\src\third_party\json\include\json\config.h" />
+    <ClInclude Include="..\src\third_party\json\include\json\features.h" />
+    <ClInclude Include="..\src\third_party\json\include\json\forwards.h" />
+    <ClInclude Include="..\src\third_party\json\include\json\json.h" />
+    <ClInclude Include="..\src\third_party\json\include\json\reader.h" />
+    <ClInclude Include="..\src\third_party\json\include\json\value.h" />
+    <ClInclude Include="..\src\third_party\json\include\json\writer.h" />
+    <ClInclude Include="..\src\third_party\json\src\lib_json\json_batchallocator.h" />
+    <ClInclude Include="..\src\third_party\vld\include\vld.h" />
+    <ClInclude Include="..\src\third_party\vld\include\vld_def.h" />
+    <ClInclude Include="..\src\third_party\websockets\lib\extension-deflate-frame.h" />
+    <ClInclude Include="..\src\third_party\websockets\lib\extension-deflate-stream.h" />
+    <ClInclude Include="..\src\third_party\websockets\lib\ifaddrs.h" />
+    <ClInclude Include="..\src\third_party\websockets\lib\libwebsockets.h" />
+    <ClInclude Include="..\src\third_party\websockets\lib\private-libwebsockets.h" />
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\getopt.h" />
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\gettimeofday.h" />
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\netdb.h" />
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\strings.h" />
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\unistd.h" />
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\websock-w32.h" />
+    <ClInclude Include="..\src\util\JsonHelper.h" />
+    <ClInclude Include="..\src\util\WebSocket.h" />
+    <ClInclude Include="..\src\cqwrap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\third_party\json\src\lib_json\json_internalarray.inl" />
+    <None Include="..\src\third_party\json\src\lib_json\json_internalmap.inl" />
+    <None Include="..\src\third_party\json\src\lib_json\json_valueiterator.inl" />
+    <None Include="..\src\third_party\json\src\lib_json\sconscript" />
+    <None Include="..\src\third_party\websockets\lib\Makefile.am" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

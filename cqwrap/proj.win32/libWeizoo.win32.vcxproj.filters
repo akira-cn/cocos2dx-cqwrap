@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resource">
+      <UniqueIdentifier>{690fbcf9-50d5-460c-9baa-6e7ec9a9ac6f}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;png;manifest</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4cb063d2-2b10-4ff6-8a9c-32f37bca9265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{ad1f1b2d-d047-4924-8185-d38db5c856e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\pattern">
+      <UniqueIdentifier>{1cc41292-76cd-44a4-a562-46bd1d8fe2e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party">
+      <UniqueIdentifier>{497e91ef-1824-46b8-92cd-bf9309f2bb7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\vld">
+      <UniqueIdentifier>{e5621c60-d396-48a1-af9e-39de33bb602b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\json">
+      <UniqueIdentifier>{bdd1e8d5-8b6a-4759-9334-2b3e8d03e2a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\json\include">
+      <UniqueIdentifier>{e7a40d35-ed74-47cd-b7db-ec466b2540d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\json\src">
+      <UniqueIdentifier>{d8f07fa5-427d-426b-9146-95a2688e5386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\websockets">
+      <UniqueIdentifier>{9bf3908d-8ed2-478c-8a0a-bf7ed58adba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scripting">
+      <UniqueIdentifier>{12977a52-6d45-4da2-b422-083145b799ca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\libWeizoo.ico">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="..\assets\CloseNormal.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="..\assets\CloseSelected.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="..\assets\HelloWorld.png">
+      <Filter>resource</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="libWeizoo.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\util\JsonHelper.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\json\src\lib_json\json_reader.cpp">
+      <Filter>src\third_party\json\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\json\src\lib_json\json_value.cpp">
+      <Filter>src\third_party\json\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\json\src\lib_json\json_writer.cpp">
+      <Filter>src\third_party\json\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\base64-decode.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\client-handshake.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\extension.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\extension-deflate-stream.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\handshake.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\libwebsockets.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\parsers.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\sha-1.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\websock-w32.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\WebSocket.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\client.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\client-parser.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\extension-deflate-frame.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\output.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\server.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\server-handshake.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\getopt.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\getopt_long.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\lib\md5.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\gettimeofday.c">
+      <Filter>src\third_party\websockets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pattern\CustEvent.cpp">
+      <Filter>src\pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scripting\cqwrap_websock_manual.cpp">
+      <Filter>src\scripting</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\pattern\Singleton.h">
+      <Filter>src\pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\JsonHelper.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\vld\include\vld.h">
+      <Filter>src\third_party\vld</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\vld\include\vld_def.h">
+      <Filter>src\third_party\vld</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\include\json\autolink.h">
+      <Filter>src\third_party\json\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\include\json\config.h">
+      <Filter>src\third_party\json\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\include\json\features.h">
+      <Filter>src\third_party\json\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\include\json\forwards.h">
+      <Filter>src\third_party\json\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\include\json\json.h">
+      <Filter>src\third_party\json\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\include\json\reader.h">
+      <Filter>src\third_party\json\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\include\json\value.h">
+      <Filter>src\third_party\json\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\include\json\writer.h">
+      <Filter>src\third_party\json\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\json\src\lib_json\json_batchallocator.h">
+      <Filter>src\third_party\json\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\lib\extension-deflate-stream.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\lib\libwebsockets.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\lib\private-libwebsockets.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\websock-w32.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\WebSocket.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\unistd.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\lib\extension-deflate-frame.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\lib\ifaddrs.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\getopt.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\netdb.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\strings.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\gettimeofday.h">
+      <Filter>src\third_party\websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\pattern\CustEvent.h">
+      <Filter>src\pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cqwrap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scripting\cqwrap_register_all_manual.h">
+      <Filter>src\scripting</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\third_party\json\src\lib_json\json_internalarray.inl">
+      <Filter>src\third_party\json\src</Filter>
+    </None>
+    <None Include="..\src\third_party\json\src\lib_json\json_internalmap.inl">
+      <Filter>src\third_party\json\src</Filter>
+    </None>
+    <None Include="..\src\third_party\json\src\lib_json\json_valueiterator.inl">
+      <Filter>src\third_party\json\src</Filter>
+    </None>
+    <None Include="..\src\third_party\json\src\lib_json\sconscript">
+      <Filter>src\third_party\json\src</Filter>
+    </None>
+    <None Include="..\src\third_party\websockets\lib\Makefile.am">
+      <Filter>src\third_party\websockets</Filter>
+    </None>
+  </ItemGroup>
+</Project>
