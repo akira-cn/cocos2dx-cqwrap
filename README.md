@@ -3,7 +3,7 @@ CQWrap
 
 Extensions for cocos2d-x javascript bindings.
 
-1. WebSocket for cocos2d-x
+# 1. WebSocket for cocos2d-x
 
 Export websocket api in javascript for cocos2d-x javascript bindings.
 
