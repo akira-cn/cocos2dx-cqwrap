@@ -141,7 +141,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 	jsval *argv = JS_ARGV(cx, vp);
 	if (argc == 1 || argc == 2) {
 		std::string* url = new std::string();
-		std::string::size_type pos;
+		int pos;
 		do {
 			JSBool ok = jsval_to_std_string(cx, argv[0], url);
 			JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error processing arguments");
@@ -159,8 +159,12 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 		if(pos >= 0){
 			port = atoi(host.substr(pos+1, host.size()).c_str());
 		}
+
 		pos = host.find("/", pos);
-		std::string path = host.substr(pos, host.size());
+		std::string path = "/";
+		if(pos >= 0){
+			path += host.substr(pos + 1, host.size());
+		}
 
 		pos = host.find(":");
 		if(pos >= 0){
