@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\pattern\CustEvent.cpp" />
+    <ClCompile Include="..\src\scripting\cqwrap_jstimer_manual.cpp" />
     <ClCompile Include="..\src\scripting\cqwrap_websock_manual.cpp" />
     <ClCompile Include="..\src\third_party\json\src\lib_json\json_reader.cpp" />
     <ClCompile Include="..\src\third_party\json\src\lib_json\json_value.cpp" />

@@ -134,6 +134,9 @@
     <ClCompile Include="..\src\scripting\cqwrap_websock_manual.cpp">
       <Filter>src\scripting</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\scripting\cqwrap_jstimer_manual.cpp">
+      <Filter>src\scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\pattern\Singleton.h">

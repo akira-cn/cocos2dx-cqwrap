@@ -9,5 +9,6 @@ extern JSClass  *jsb_WebSocket_Class;
 extern JSObject *jsb_WebSocket_prototype;
 
 void register_cqwrap_websocket(JSContext* cx, JSObject* obj);
+void register_cqwrap_jstimer(JSContext* cx, JSObject* obj);
 
 #endif

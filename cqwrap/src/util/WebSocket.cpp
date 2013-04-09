@@ -297,18 +297,19 @@ static int
 	CCLog("socket callback for %d reason", reason);
 	
 	switch (reason) {
-	case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
 	case LWS_CALLBACK_PROTOCOL_DESTROY:
-		
-		CCLog("connect error for %d reason", reason);
-
+	case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
 		{
 			CCObject* obj;
 			pthread_mutex_lock(&WebSocket::s_socketsMutex);
 			CCARRAY_FOREACH(WebSocket::getAllSockets(), obj){
 				WebSocket* socket = (WebSocket*)obj;
 				if(pthread_equal(socket->m_networkThread, pthread_self())){
-					socket->putMessage(JSON::parse("null"), true);	//put a errorMessage
+					if(reason != LWS_CALLBACK_PROTOCOL_DESTROY || socket->readyState == WebSocket::CONNECTING){
+						//CONNECTION_ERROR or PROTOCOL_DESTROY before OPEN
+						CCLog("connect error for %d reason", reason);
+						socket->putMessage(JSON::parse("null"), true);	//put a errorMessage
+					}
 					break;
 				}
 			}
