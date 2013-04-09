@@ -1,0 +1,1 @@
+Build as shared library for LGPL2
