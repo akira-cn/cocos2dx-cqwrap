@@ -35,7 +35,7 @@ CCArray* WebSocket::s_pool = NULL;		//socket shared resource pool
 
 WebSocket::WebSocket(const char* host, int port/* =80 */, const char* path/* ="/" */){
 
-	m_js_proxy = NULL;
+	m_proxy = NULL;
 	m_error = false;
 
 	URL = CCString::createWithFormat("ws://%s:%d%s", host, port, path);
@@ -64,11 +64,9 @@ WebSocket::WebSocket(const char* host, int port/* =80 */, const char* path/* ="/
 	pthread_create(&m_networkThread, NULL, networkThread, info);
 }
 
-void WebSocket::js_fire(const char* type, JsonData* msg){
-	if(m_js_proxy != NULL){
+void WebSocket::proxy_fire(const char* type, JsonData* msg){
+	if(m_proxy != NULL){
 
-		jsval retval;
-		
 		JsonData evt;
 		evt["data"] = JSON::stringify(msg);
 		evt["source"] = Json::nullValue;	//not implemented yet
@@ -79,20 +77,20 @@ void WebSocket::js_fire(const char* type, JsonData* msg){
 		std::string handler = std::string("on");
 		handler+=type;
 		
-		jsval dataVal = STRING_TO_JSVAL(JS_NewStringCopyZ(ScriptingCore::getInstance()->getGlobalContext(), JSON::stringify(&evt).c_str()));
+		JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+		
+		jsval dataVal = STRING_TO_JSVAL(JS_NewStringCopyZ(cx, JSON::stringify(&evt).c_str()));
 
 		JSObject* obj = ScriptingCore::getInstance()->getGlobalObject();
-		JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+
 		jsval nsval;
 		JS_GetProperty(cx, obj, "JSON", &nsval);
 		
 		ScriptingCore::getInstance()->executeFunctionWithOwner(nsval, "parse", 1, &dataVal, &dataVal);
-		ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_js_proxy->obj), handler.c_str(), 1, &dataVal, &retval);
-	}
-}
 
-void WebSocket::setJsProxy(js_proxy_t* proxy){
-	m_js_proxy = proxy;
+		jsval retval;
+		ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_proxy->obj), handler.c_str(), 1, &dataVal, &retval);
+	}
 }
 
 void WebSocket::dispatchEvents(float dt){
@@ -103,11 +101,11 @@ void WebSocket::dispatchEvents(float dt){
 
 	if(this->m_error){
 		this->fire("error", NULL);
-		this->js_fire("error", NULL);
+		this->proxy_fire("error", NULL);
 
 		CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
 		this->fire("close", NULL);
-		this->js_fire("close", NULL);
+		this->proxy_fire("close", NULL);
 		
 		readyState = CLOSED;
 		return;
@@ -116,7 +114,7 @@ void WebSocket::dispatchEvents(float dt){
 	if(this->readyState == CONNECTING){
 		this->readyState = OPEN;
 		this->fire("open", NULL);
-		this->js_fire("open", NULL);
+		this->proxy_fire("open", NULL);
 	}
 
 	pthread_mutex_lock(&m_responseQueueMutex);
@@ -124,11 +122,11 @@ void WebSocket::dispatchEvents(float dt){
 		JsonData* msg = (JsonData*)m_responseMessage->objectAtIndex(0);
 		if(!msg->isNull()){
 			this->fire("message", msg);
-			this->js_fire("message", msg);
+			this->proxy_fire("message", msg);
 		}else{
 			CCDirector::sharedDirector()->getScheduler()->pauseTarget(this);
 			this->fire("close", NULL);
-			this->js_fire("close", NULL);
+			this->proxy_fire("close", NULL);
 
 			readyState = CLOSED;
 		}
@@ -158,7 +156,7 @@ void WebSocket::putMessage(JsonData* message, bool error /*= fase*/){
 WebSocket::~WebSocket(){
 	if(readyState != CLOSED){
 		this->fire("close", NULL);
-		this->js_fire("close", NULL);
+		this->proxy_fire("close", NULL);
 		
 		readyState = CLOSED;
 	}

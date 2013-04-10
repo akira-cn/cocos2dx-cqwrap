@@ -10,6 +10,7 @@
 #include "cocos2d.h"
 #include "pattern/Singleton.h"
 #include "pattern/CustEvent.h"
+#include "pattern/EventProxy.h"
 #include "util/JsonHelper.h"
 #include "util/WebSocket.h"
 #include "scripting/cqwrap_register_all_manual.h"

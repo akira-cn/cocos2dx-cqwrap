@@ -133,7 +133,7 @@ void js_cocos2dx_extension_WebSocket_finalize(JSFreeOp *fop, JSObject *obj){
 }
 
 /*
-	new cc.WebSocket(host, port, path='/');		
+	new cc.WebSocket('ws://host:port/path');		
 	TODO: support sub-protocols
  */
 JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -177,13 +177,12 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 			_ccobj->autorelease();
 		}*/
 
-		TypeTest<cocos2d::CCObject> t;
+		TypeTest<cocos2d::extension::WebSocket> t;
 		js_type_class_t *typeClass;
 		uint32_t typeId = t.s_id();
 		HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
 		assert(typeClass);
 		JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-		std::string URL =  std::string(url->c_str());
 
 		JS_DefineProperty(cx, obj, "URL", argv[0]
 			, NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
@@ -197,7 +196,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 		js_proxy_t *p;
 		JS_NEW_PROXY(p, cobj, obj);
 		JS_AddNamedObjectRoot(cx, &p->obj, "WebSocket");
-		cobj->setJsProxy(p);
+		cobj->setProxy(p);
 
 		CC_SAFE_DELETE(url);
 		return JS_TRUE;
@@ -260,7 +259,7 @@ void js_register_cocos2dx_extension_websocket(JSContext *cx, JSObject *global) {
 	JS_SetPropertyAttributes(cx, global, "WebSocket", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
 	// add the proto and JSClass to the type->js info hash table
-	TypeTest<cocos2d::CCObject> t;
+	TypeTest<cocos2d::extension::WebSocket> t;
 	js_type_class_t *p;
 	uint32_t typeId = t.s_id();
 	HASH_FIND_INT(_js_global_type_ht, &typeId, p);

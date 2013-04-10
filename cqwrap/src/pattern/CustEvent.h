@@ -16,9 +16,9 @@ protected:
 	~CustEvent();
 	void lazyInit();
 public:
-	void on(const char* type, CCObject* target, SEL_CallFuncO callback);
-	void un(const char* type, CCObject* target, SEL_CallFuncO callback);
-	void fire(const char* type, CCObject* args);
+	virtual void on(const char* type, CCObject* target, SEL_CallFuncO callback);
+	virtual void un(const char* type, CCObject* target, SEL_CallFuncO callback);
+	virtual void fire(const char* type, CCObject* args);
 };
 
 NS_CC_EXT_END

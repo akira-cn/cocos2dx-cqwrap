@@ -137,6 +137,9 @@
     <ClCompile Include="..\src\scripting\cqwrap_jstimer_manual.cpp">
       <Filter>src\scripting</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\scripting\cqwrap_httprequest_manual.cpp">
+      <Filter>src\scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\pattern\Singleton.h">
@@ -222,6 +225,9 @@
     </ClInclude>
     <ClInclude Include="..\src\scripting\cqwrap_register_all_manual.h">
       <Filter>src\scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\pattern\EventProxy.h">
+      <Filter>src\pattern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

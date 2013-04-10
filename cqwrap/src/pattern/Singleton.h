@@ -1,5 +1,5 @@
-#ifndef __Weizoo_Singleton_H__
-#define __Weizoo_Singleton_H__
+#ifndef __Pattern_Singleton_H__
+#define __Pattern_Singleton_H__
 
 #include "cocos-ext.h"
 

@@ -10,6 +10,8 @@ LOCAL_MODULE_FILENAME := libcqwrap
 
 LOCAL_SRC_FILES :=  \
 	./src/pattern/CustEvent.cpp \
+	./src/scripting/cqwrap_httprequest_manual.cpp \
+	./src/scripting/cqwrap_jstimer_manual.cpp \
 	./src/scripting/cqwrap_websock_manual.cpp \
 	./src/third_party/json/src/lib_json/json_reader.cpp \
 	./src/third_party/json/src/lib_json/json_value.cpp \

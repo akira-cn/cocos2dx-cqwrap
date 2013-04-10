@@ -12,6 +12,7 @@
 
 #include "libwebsockets.h"
 #include "pattern/CustEvent.h"
+#include "pattern/EventProxy.h"
 #include "util/JsonHelper.h"
 
 #include <queue>
@@ -25,7 +26,7 @@
 
 NS_CC_EXT_BEGIN
 
-class WebSocket: public CCObject, public CustEvent{
+class WebSocket: public CCObject, public CustEvent, public EventProxy<js_proxy_t>{
 protected:
 	static CCArray* s_pool;	
 
@@ -34,10 +35,8 @@ protected:
 	bool m_error;
 
 	void dispatchEvents(float dt);
-	void js_fire(const char* type, JsonData* msg);
+	virtual void proxy_fire(const char* type, JsonData* msg);
 
-	js_proxy_t* m_js_proxy;
-	
 public:
 	static pthread_t s_networkThread;
 	static CCArray* s_requestMessageQueue;
@@ -61,8 +60,6 @@ public:
 	void close();
 
 	void putMessage(JsonData* message, bool error = false);
-
-	void setJsProxy(js_proxy_t* m_js_proxy);
 };
 
 NS_CC_EXT_END
