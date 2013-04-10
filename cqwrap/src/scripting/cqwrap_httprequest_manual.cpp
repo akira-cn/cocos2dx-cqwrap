@@ -200,6 +200,16 @@ JSBool js_cocos2dx_extension_HttpRequest_send(JSContext *cx, uint32_t argc, jsva
 	return JS_FALSE;
 }
 
+JSBool js_cocos2dx_extension_HttpRequest_oncomplete(JSContext *cx, uint32_t argc, jsval *vp){
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_FALSE;
+}
+
+JSBool js_cocos2dx_extension_HttpRequest_onerror(JSContext *cx, uint32_t argc, jsval *vp){
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
 void js_cocos2dx_extension_HttpRequest_finalize(JSFreeOp *fop, JSObject *obj){
 
 }
@@ -247,6 +257,8 @@ void js_register_cocos2dx_extension_httprequest(JSContext *cx, JSObject *global)
 	};
 
 	static JSFunctionSpec funcs[] = {
+		JS_FN("oncomplete",js_cocos2dx_extension_HttpRequest_oncomplete, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("onerror",js_cocos2dx_extension_HttpRequest_onerror, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("send",js_cocos2dx_extension_HttpRequest_send, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("open",js_cocos2dx_extension_HttpRequest_open, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setRequestHeader",js_cocos2dx_extension_HttpRequest_setRequestHeader, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
