@@ -4,7 +4,7 @@
 
 //Detect Memory Leaks
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	//#include "vld.h"
+	#include "vld.h"
 #endif
 
 #include "cocos2d.h"

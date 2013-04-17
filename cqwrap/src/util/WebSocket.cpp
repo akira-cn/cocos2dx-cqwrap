@@ -7,9 +7,12 @@
 #include <errno.h>
 #include "json.h"
 
+#include "ScriptingCore.h"
+#include "generated/jsb_cocos2dx_auto.hpp"
+#include "cocos2d_specifics.hpp"
+
 USING_NS_CC_EXT;
 
-pthread_t				WebSocket::s_networkThread;
 CCArray*				WebSocket::s_requestMessageQueue = NULL;
 pthread_mutex_t			WebSocket::s_socketsMutex;
 pthread_mutex_t			WebSocket::s_requestQueueMutex;
@@ -35,7 +38,6 @@ CCArray* WebSocket::s_pool = NULL;		//socket shared resource pool
 
 WebSocket::WebSocket(const char* host, int port/* =80 */, const char* path/* ="/" */){
 
-	m_proxy = NULL;
 	m_error = false;
 
 	URL = CCString::createWithFormat("ws://%s:%d%s", host, port, path);
@@ -62,38 +64,24 @@ WebSocket::WebSocket(const char* host, int port/* =80 */, const char* path/* ="/
 	this->m_responseMessage = new CCArray();
 	this->readyState = CONNECTING;
 	pthread_create(&m_networkThread, NULL, networkThread, info);
+	//pthread_detach(m_networkThread);
 }
 
 void WebSocket::proxy_fire(const char* type, JsonData* msg){
-	if(m_proxy != NULL){
+	JsonData evt;
+	evt["data"] = JSON::stringify(msg);
+	evt["source"] = Json::nullValue;	//not implemented yet
+	evt["type"] = type;
+	evt["lastEventId"] = "";	//not implemented yet
+	evt["origin"] = this->URL->getCString();
 
-		JsonData evt;
-		evt["data"] = JSON::stringify(msg);
-		evt["source"] = Json::nullValue;	//not implemented yet
-		evt["type"] = type;
-		evt["lastEventId"] = "";	//not implemented yet
-		evt["origin"] = this->URL->getCString();
-
-		std::string handler = std::string("on");
-		handler+=type;
-		
-		JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-		
-		jsval dataVal = STRING_TO_JSVAL(JS_NewStringCopyZ(cx, JSON::stringify(&evt).c_str()));
-
-		JSObject* obj = ScriptingCore::getInstance()->getGlobalObject();
-
-		jsval nsval;
-		JS_GetProperty(cx, obj, "JSON", &nsval);
-		
-		ScriptingCore::getInstance()->executeFunctionWithOwner(nsval, "parse", 1, &dataVal, &dataVal);
-
-		jsval retval;
-		ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_proxy->obj), handler.c_str(), 1, &dataVal, &retval);
-	}
+	PROXY_FIRE(type, &evt);	
 }
 
 void WebSocket::dispatchEvents(float dt){
+	if(this->readyState == CLOSED){
+		return;
+	}
 	
 	CCAssert(!pthread_equal(m_networkThread, pthread_self()), "dispatchEvents should not run in sub thread!");
 	
@@ -154,6 +142,7 @@ void WebSocket::putMessage(JsonData* message, bool error /*= fase*/){
 }
 
 WebSocket::~WebSocket(){
+	
 	if(readyState != CLOSED){
 		this->fire("close", NULL);
 		this->proxy_fire("close", NULL);
@@ -176,17 +165,21 @@ WebSocket::~WebSocket(){
 		s_pool->removeObject(this);
 		pthread_mutex_unlock(&s_socketsMutex);
 	}
-	
+
 	if(NULL != s_pool && s_pool->count() <= 0){
-		CCObject* obj;
-		
-		CCARRAY_FOREACH(s_requestMessageQueue, obj){
-			((JsonData*)obj)->release();
-		}
 		
 		pthread_mutex_lock(&s_requestQueueMutex);
+
+		//s_requestMessageQueue->removeAllObjects();
+		CCObject* obj;
+		CCARRAY_FOREACH(s_requestMessageQueue, obj){
+			s_requestMessageQueue->removeObject(obj);
+			JsonData* msg = (JsonData*)obj;
+			CC_SAFE_DELETE(msg);
+		}
 		s_requestMessageQueue->release();
 		s_requestMessageQueue = NULL;
+
 		pthread_mutex_unlock(&s_requestQueueMutex);
 
 		pthread_mutex_destroy(&s_socketsMutex);
@@ -197,6 +190,20 @@ WebSocket::~WebSocket(){
 	}
 
 	URL->release();
+}
+
+void WebSocket::cleanUp(){
+	if(NULL != s_pool && s_pool->count() > 0){
+		CCObject* obj;
+		CCARRAY_FOREACH(s_pool, obj){
+			WebSocket* ws = (WebSocket*) obj;
+			ws->close();
+			ws->m_error = true;
+			ws->readyState = CLOSED;
+
+			pthread_join(ws->m_networkThread,NULL);
+		}
+	}
 }
 
 void WebSocket::close(){
@@ -223,6 +230,8 @@ void WebSocket::send(JsonData* data){
 	pthread_mutex_lock(&s_requestQueueMutex);
 	s_requestMessageQueue->addObject(pack); 
 	pthread_mutex_unlock(&s_requestQueueMutex);
+
+	CC_SAFE_DELETE(data);
 }
 
 CCArray* WebSocket::getAllSockets(){
@@ -252,19 +261,21 @@ static void* networkThread(void *data){
 	info.gid = -1;
 	info.uid = -1;
 
-	Json::Value serverInfo = *((Json::Value*) data);
+	Json::Value* serverInfo = (Json::Value*) data;
 
 	context = libwebsocket_create_context(&info);
 
-	const char* server = serverInfo["host"].asCString();
-	int port = serverInfo["port"].asInt();
-	const char* path = serverInfo["path"].asCString();
+	const char* server = (*serverInfo)["host"].asCString();
+	int port = (*serverInfo)["port"].asInt();
+	const char* path = (*serverInfo)["path"].asCString();
 
 	if(NULL != context){
 		struct libwebsocket *socket;
 		socket = libwebsocket_client_connect(context, server, port, 0,
 			path, server, server,
 			protocols[0].name, -1);
+
+		CC_SAFE_DELETE(serverInfo);
 
 		if(socket != NULL){
 			//CCLog("opened!");
@@ -276,7 +287,7 @@ static void* networkThread(void *data){
 		libwebsocket_context_destroy(context);
 	}
 
-	CC_SAFE_DELETE(data);
+	CC_SAFE_DELETE(serverInfo);
 	pthread_exit(NULL);
 
 	return 0;
@@ -306,13 +317,18 @@ static int
 					if(reason != LWS_CALLBACK_PROTOCOL_DESTROY || socket->readyState == WebSocket::CONNECTING){
 						//CONNECTION_ERROR or PROTOCOL_DESTROY before OPEN
 						CCLog("connect error for %d reason", reason);
+						socket->autorelease();
+						WebSocket::getAllSockets()->removeObject(obj);
 						socket->putMessage(JSON::parse("null"), true);	//put a errorMessage
+			
+						pthread_mutex_unlock(&WebSocket::s_socketsMutex);
+						libwebsocket_context_destroy(ctx);
+						pthread_exit(NULL);
 					}
 					break;
 				}
 			}
 			pthread_mutex_unlock(&WebSocket::s_socketsMutex);	
-
 		}
 		break;
 	case LWS_CALLBACK_CLIENT_ESTABLISHED:
@@ -389,7 +405,8 @@ static int
 											JsonData* data = (JsonData*)obj;
 											if(!strcmp(tid, (*data)["tid"].asCString())){
 												//remove all message left before close
-												WebSocket::s_requestMessageQueue->removeObject(data);	
+												WebSocket::s_requestMessageQueue->removeObject(data);
+												CC_SAFE_DELETE(data);
 											}
 										}
 									}
@@ -400,7 +417,7 @@ static int
 							}
 							pthread_mutex_unlock(&WebSocket::s_socketsMutex);
 							pthread_mutex_unlock(&WebSocket::s_requestQueueMutex);
-
+							CC_SAFE_DELETE(data);
 							libwebsocket_context_destroy(ctx);
 							pthread_exit(NULL);
 						}
@@ -455,7 +472,8 @@ static int
 							JsonData* data = (JsonData*)obj;
 							const char* tid = CCString::createWithFormat("%lu", pthread_self())->getCString();
 							if(!strcmp(tid, (*data)["tid"].asCString())){
-								WebSocket::s_requestMessageQueue->removeObject(data);	
+								WebSocket::s_requestMessageQueue->removeObject(data);
+								CC_SAFE_DELETE(data);
 							}
 						}
 					}

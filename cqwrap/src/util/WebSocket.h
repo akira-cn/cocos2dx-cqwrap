@@ -26,7 +26,7 @@
 
 NS_CC_EXT_BEGIN
 
-class WebSocket: public CCObject, public CustEvent, public EventProxy<js_proxy_t>{
+class WebSocket: public CCObject, public CustEvent{
 protected:
 	static CCArray* s_pool;	
 
@@ -38,7 +38,6 @@ protected:
 	virtual void proxy_fire(const char* type, JsonData* msg);
 
 public:
-	static pthread_t s_networkThread;
 	static CCArray* s_requestMessageQueue;
 	static pthread_mutex_t  s_socketsMutex;
 	static pthread_mutex_t  s_requestQueueMutex;
@@ -49,6 +48,7 @@ public:
 	static const unsigned short CLOSED = 3;
 
 	static CCArray* getAllSockets();
+	static void cleanUp();
 	
 	pthread_t  m_networkThread;
 	unsigned short readyState;

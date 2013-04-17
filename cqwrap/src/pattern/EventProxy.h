@@ -1,24 +1,35 @@
-#ifndef __Pattern_JsProxy_H__
-#define __Pattern_JsProxy_H__
+#ifndef __Pattern_EventProxy_H__
+#define __Pattern_EventProxy_H__
 
 #include "cocos-ext.h"
 #include "util/JsonHelper.h"
 
-NS_CC_EXT_BEGIN
+#include "ScriptingCore.h"
+#include "generated/jsb_cocos2dx_auto.hpp"
+#include "cocos2d_specifics.hpp"
 
-template <class T>
-class EventProxy{
-
-protected:
-	virtual void proxy_fire(const char* type, JsonData* msg) = 0;
-	T* m_proxy;
-public:
-	virtual void setProxy(T* proxy){
-		this->m_proxy = proxy;
-	};
-
-};
-
-NS_CC_EXT_END
+#define PROXY_FIRE(type, evt) \
+do{ \
+	js_proxy_t * p;	\
+	void* ptr = (void*)this; \
+	JS_GET_PROXY(p, ptr); \
+	if(p){ \
+		JSContext* cx = ScriptingCore::getInstance()->getGlobalContext(); \
+		JSObject* obj = ScriptingCore::getInstance()->getGlobalObject(); \
+\
+		jsval dataVal = c_string_to_jsval(cx, JSON::stringify(evt).c_str()); \
+\
+		/*convert to js-json*/ \
+		jsval nsval; \
+		JS_GetProperty(cx, obj, "JSON", &nsval); \
+		ScriptingCore::getInstance()->executeFunctionWithOwner(nsval, "parse", 1, &dataVal, &dataVal);\
+\
+		/*fire the event*/ \
+		std::string handler = std::string("on"); \
+		handler+=type; \
+		jsval retval; \
+		ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), handler.c_str(), 1, &dataVal, &retval); \
+	} \
+}while(0) \
 
 #endif

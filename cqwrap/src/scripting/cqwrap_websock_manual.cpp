@@ -188,7 +188,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 			, NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
 
 		//protocol not support yet (always return "")
-		JS_DefineProperty(cx, obj, "protocol", STRING_TO_JSVAL(JS_NewStringCopyZ(cx, ""))
+		JS_DefineProperty(cx, obj, "protocol", c_string_to_jsval(cx, "")
 			, NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);	
 
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj));
@@ -196,7 +196,6 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 		js_proxy_t *p;
 		JS_NEW_PROXY(p, cobj, obj);
 		JS_AddNamedObjectRoot(cx, &p->obj, "WebSocket");
-		cobj->setProxy(p);
 
 		CC_SAFE_DELETE(url);
 		return JS_TRUE;

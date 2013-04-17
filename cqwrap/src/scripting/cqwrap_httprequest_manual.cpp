@@ -27,24 +27,11 @@ void register_cqwrap_httprequest(JSContext* cx, JSObject* obj) {
 	js_register_cocos2dx_extension_httprequest(cx, obj);
 }
 
-class HttpRequest: public CCHttpRequest, public EventProxy<js_proxy_t>{
+class HttpRequest: public CCObject{
 protected:
-	virtual void proxy_fire(const char* type, JsonData* msg){
-		//fire the js event
-		if(m_proxy != NULL){
-			const char* data = (*msg)["data"].asCString();
-			
-			JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+	CCHttpRequest* m_request;
+	std::vector<std::string> m_headers;
 
-			jsval dataVal = STRING_TO_JSVAL(JS_NewStringCopyZ(cx, data));
-			
-			std::string handler = std::string("on");
-			handler+=type;
-			
-			jsval retval;
-			ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(m_proxy->obj), handler.c_str(), 1, &dataVal, &retval);
-		}
-	};
 	void responseCallback(cocos2d::CCNode *sender, void *data){
 		CCHttpResponse *response = (CCHttpResponse*)data; 
 
@@ -67,7 +54,8 @@ protected:
 
 			JsonData* msg = new JsonData();
 			(*msg)["data"] = response->getErrorBuffer();
-			proxy_fire("error", msg);
+			PROXY_FIRE("error", msg);
+			CC_SAFE_DELETE(msg);
 
 			return; 
 		}
@@ -79,21 +67,43 @@ protected:
 
 		JsonData* msg = new JsonData();
 		(*msg)["data"] = buf.c_str();
-		proxy_fire("complete", msg);
+		PROXY_FIRE("complete", msg);
+		CC_SAFE_DELETE(msg);
 	};
 public:
 	void send(const char* buffer = NULL){
-		if(NULL != buffer){
-			this->setRequestData(buffer, sizeof buffer);
+		if(m_request != NULL){
+			if(NULL != buffer){
+				m_request->setRequestData(buffer, sizeof buffer);
+			}
+			m_request->setHeaders(m_headers);
+			CCHttpClient::getInstance()->send(m_request);
+			CC_SAFE_RELEASE_NULL(m_request);
+			m_headers.clear();
 		}
-		CCHttpClient::getInstance()->send(this); 
 	};
-	void open(HttpRequestType type, const char* url){
-		this->setRequestType(type);
-		this->setUrl(url);
+	void setRequestHeader(std::string key, std::string content){
+		if(m_request != NULL){
+			key += ": ";
+			key += content;
+			m_headers.push_back(key);
+		}
+	};
+	void open(CCHttpRequest::HttpRequestType type, const char* url){
+
+		CC_SAFE_RELEASE_NULL(m_request);
+		m_request = new CCHttpRequest(); 
+
+		m_request->setUrl(url); 
+		m_request->setRequestType(type); 
+		m_request->setResponseCallback(this, callfuncND_selector(HttpRequest::responseCallback));
 	};
 	HttpRequest(){
-		this->setResponseCallback(this, callfuncND_selector(HttpRequest::responseCallback));
+		m_request = NULL;
+		m_headers = std::vector<std::string>();
+	};
+	~HttpRequest(){
+		CC_SAFE_RELEASE_NULL(m_request);
 	};
 };
 
@@ -119,14 +129,12 @@ JSBool js_cocos2dx_extension_HttpRequest_setRequestHeader(JSContext *cx, uint32_
 			JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error processing arguments");
 		} while (0);
 
-		std::vector<std::string> headers = cobj->getHeaders();
-		std::string header = *key;
-		header += ": ";
-		header += *value;
-
-		headers.push_back(header);
+		cobj->setRequestHeader(*key, *value);
 
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+
+		CC_SAFE_DELETE(key);
+		CC_SAFE_DELETE(value);
 
 		return JS_TRUE;	
 	}
@@ -218,6 +226,9 @@ JSBool js_cocos2dx_extension_HttpRequest_constructor(JSContext *cx, uint32_t arg
 	if(argc == 0){
 		HttpRequest* cobj = new HttpRequest(); 
 		cocos2d::CCObject *_ccobj = dynamic_cast<cocos2d::CCObject *>(cobj);
+		if (_ccobj) {
+			_ccobj->autorelease();
+		}
 
 		TypeTest<cocos2d::extension::CCHttpRequest> t;
 		js_type_class_t *typeClass;
@@ -231,7 +242,6 @@ JSBool js_cocos2dx_extension_HttpRequest_constructor(JSContext *cx, uint32_t arg
 		js_proxy_t *p;
 		JS_NEW_PROXY(p, cobj, obj);
 		JS_AddNamedObjectRoot(cx, &p->obj, "HttpRequest");
-		cobj->setProxy(p);
 
 		return JS_TRUE;
 	}
@@ -259,7 +269,7 @@ void js_register_cocos2dx_extension_httprequest(JSContext *cx, JSObject *global)
 	static JSFunctionSpec funcs[] = {
 		JS_FN("oncomplete",js_cocos2dx_extension_HttpRequest_oncomplete, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("onerror",js_cocos2dx_extension_HttpRequest_onerror, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("send",js_cocos2dx_extension_HttpRequest_send, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("send",js_cocos2dx_extension_HttpRequest_send, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("open",js_cocos2dx_extension_HttpRequest_open, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setRequestHeader",js_cocos2dx_extension_HttpRequest_setRequestHeader, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END

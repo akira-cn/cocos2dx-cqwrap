@@ -17,7 +17,7 @@ LOCAL_SRC_FILES :=  \
 	./src/third_party/json/src/lib_json/json_value.cpp \
 	./src/third_party/json/src/lib_json/json_writer.cpp \
 	./src/util/JsonHelper.cpp \
-	./src/util/WebSocket.cpp 
+	./src/util/WebSocket.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static 
