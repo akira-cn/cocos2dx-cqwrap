@@ -12,7 +12,6 @@
 #import <UIKIt/UIColor.h>
 
 #import "WebViewLayer.h"
-#import "stdafx.h"
 
 @interface UIWebViewBridge : NSObject<UIWebViewDelegate,UIAlertViewDelegate>
 {

@@ -59,15 +59,12 @@ extern "C" bool Java_com_weizoo_utils_CocosMessageDelegate_receiveMessage(JNIEnv
 #else
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 ///TODO
-
-
-
-
-
-
+void NativeAdapter::postMessage(const char* message, const char* data = "null"){
+	CCLog("send: %s -> %s", message, data);
+}
 #else
-	void NativeAdapter::postMessage(const char* message, const char* data = "null"){
-		CCLog("send: %s -> %s", message, data);
-	}
+void NativeAdapter::postMessage(const char* message, const char* data = "null"){
+	CCLog("send: %s -> %s", message, data);
+}
 #endif
 #endif

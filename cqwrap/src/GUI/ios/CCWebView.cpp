@@ -1,5 +1,6 @@
 #include "../CCWebView.h"
 #include "../../util/MessageDelegate.h"
+#include "WebViewLayer.h"
 
 USING_NS_CC_EXT;
 
