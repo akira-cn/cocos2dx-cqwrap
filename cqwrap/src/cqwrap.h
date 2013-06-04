@@ -13,6 +13,10 @@
 #include "pattern/EventProxy.h"
 #include "util/JsonHelper.h"
 #include "util/WebSocket.h"
+#include "util/NativeAdapter.h"
+#include "util/MessageDelegate.h"
+#include "GUI/CCWebView.h"
+
 #include "scripting/cqwrap_register_all_manual.h"
 
 #endif

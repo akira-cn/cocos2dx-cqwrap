@@ -11,13 +11,16 @@ LOCAL_MODULE_FILENAME := libcqwrap
 LOCAL_SRC_FILES :=  \
 	./src/pattern/CustEvent.cpp \
 	./src/scripting/cqwrap_httprequest_manual.cpp \
-	./src/scripting/cqwrap_jstimer_manual.cpp \
 	./src/scripting/cqwrap_websock_manual.cpp \
+	./src/scripting/cqwrap_misc_manual.cpp \
 	./src/third_party/json/src/lib_json/json_reader.cpp \
 	./src/third_party/json/src/lib_json/json_value.cpp \
 	./src/third_party/json/src/lib_json/json_writer.cpp \
 	./src/util/JsonHelper.cpp \
-	./src/util/WebSocket.cpp
+	./src/util/WebSocket.cpp \
+	./src/util/NativeAdapter.cpp \
+	./src/util/MessageDelegate.cpp \
+	./src/GUI/android/CCWebView.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static 
@@ -34,6 +37,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/src \
 	$(LOCAL_PATH)/src/third_party/websockets/lib	
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/src \
+	$(LOCAL_PATH)/src/scripting \
+	$(LOCAL_PATH)/src/util \
+	$(LOCAL_PATH)/src/pattern \
 	$(LOCAL_PATH)/src/third_party/json/include \
 	$(LOCAL_PATH)/src/third_party/websockets/lib	
 

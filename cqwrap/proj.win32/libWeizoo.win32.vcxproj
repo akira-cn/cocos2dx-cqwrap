@@ -50,7 +50,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\src;$(ProjectDir)..\src\third_party\json\include;$(ProjectDir)..\src\third_party\json\include\json;$(ProjectDir)..\src\third_party\websockets\lib;$(ProjectDir)..\src\third_party\websockets\win32port\win32helpers;$(ProjectDir)..\src\third_party\vld\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)cocos2dx\platform\third_party\win32\pthread;$(SolutionDir)CocosDenshion\include;$(SolutionDir)extensions;$(SolutionDir)external\chipmunk\include\chipmunk;$(SolutionDir)scripting\javascript\bindings;$(SolutionDir)scripting\javascript\spidermonkey-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src;$(ProjectDir)..\src\third_party\json\include;$(ProjectDir)..\src\third_party\json\include\json;$(ProjectDir)..\src\third_party\websockets\lib;$(ProjectDir)..\src\third_party\websockets\win32port\win32helpers;$(ProjectDir)..\src\third_party\vld\include;$(SolutionDir)cocos2dx;$(SolutionDir)cocos2dx\include;$(SolutionDir)cocos2dx\kazmath\include;$(SolutionDir)cocos2dx\platform\win32;$(SolutionDir)cocos2dx\platform\third_party\win32;$(SolutionDir)cocos2dx\platform\third_party\win32\zlib;$(SolutionDir)cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)cocos2dx\platform\third_party\win32\pthread;$(SolutionDir)CocosDenshion\include;$(SolutionDir)extensions;$(SolutionDir)external\chipmunk\include\chipmunk;$(SolutionDir)scripting\javascript\bindings\generated;$(SolutionDir)scripting\javascript\bindings;$(SolutionDir)scripting\javascript\spidermonkey-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -129,9 +129,10 @@
     <ResourceCompile Include="libWeizoo.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\GUI\win32\CCWebView.cpp" />
     <ClCompile Include="..\src\pattern\CustEvent.cpp" />
     <ClCompile Include="..\src\scripting\cqwrap_httprequest_manual.cpp" />
-    <ClCompile Include="..\src\scripting\cqwrap_jstimer_manual.cpp" />
+    <ClCompile Include="..\src\scripting\cqwrap_misc_manual.cpp" />
     <ClCompile Include="..\src\scripting\cqwrap_websock_manual.cpp" />
     <ClCompile Include="..\src\third_party\json\src\lib_json\json_reader.cpp" />
     <ClCompile Include="..\src\third_party\json\src\lib_json\json_value.cpp" />
@@ -156,9 +157,12 @@
     <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\gettimeofday.c" />
     <ClCompile Include="..\src\third_party\websockets\win32port\win32helpers\websock-w32.c" />
     <ClCompile Include="..\src\util\JsonHelper.cpp" />
+    <ClCompile Include="..\src\util\MessageDelegate.cpp" />
+    <ClCompile Include="..\src\util\NativeAdapter.cpp" />
     <ClCompile Include="..\src\util\WebSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\GUI\CCWebView.h" />
     <ClInclude Include="..\src\pattern\CustEvent.h" />
     <ClInclude Include="..\src\pattern\EventProxy.h" />
     <ClInclude Include="..\src\pattern\Singleton.h" />
@@ -186,6 +190,8 @@
     <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\unistd.h" />
     <ClInclude Include="..\src\third_party\websockets\win32port\win32helpers\websock-w32.h" />
     <ClInclude Include="..\src\util\JsonHelper.h" />
+    <ClInclude Include="..\src\util\MessageDelegate.h" />
+    <ClInclude Include="..\src\util\NativeAdapter.h" />
     <ClInclude Include="..\src\util\WebSocket.h" />
     <ClInclude Include="..\src\cqwrap.h" />
   </ItemGroup>

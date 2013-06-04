@@ -2,10 +2,10 @@
 #define __Pattern_EventProxy_H__
 
 #include "cocos-ext.h"
-#include "util/JsonHelper.h"
+#include "../util/JsonHelper.h"
 
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
 #include "cocos2d_specifics.hpp"
 
 #define PROXY_FIRE(type, evt) \

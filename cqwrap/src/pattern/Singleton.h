@@ -10,7 +10,7 @@ class Singleton
 {
 public:
 	static inline T* getInstance();
-	void dropInstance();
+	static void dropInstance();
 protected:
 	Singleton(void){}
 	~Singleton(void){}
@@ -37,6 +37,6 @@ void Singleton<T>::dropInstance()
 NS_CC_EXT_END
 
 #define DECLARE_SINGLETON_MEMBER(_Ty)	\
-	template <> _Ty* weizoo::Singleton<_Ty>::s_instance = NULL;
+	template <> _Ty* cocos2d::extension::Singleton<_Ty>::s_instance = NULL;
 
-#endif//__Weizoo_Singleton__
+#endif//__Pattern_Singleton__

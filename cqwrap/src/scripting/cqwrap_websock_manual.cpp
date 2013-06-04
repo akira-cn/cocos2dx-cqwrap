@@ -1,6 +1,6 @@
 ﻿#include "cqwrap_register_all_manual.h"
-#include "util/WebSocket.h"
-#include "util/JsonHelper.h"
+#include "../util/WebSocket.h"
+#include "../util/JsonHelper.h"
 /*
 [Constructor(in DOMString url, in optional DOMString protocols)]
 [Constructor(in DOMString url, in optional DOMString[] protocols)]

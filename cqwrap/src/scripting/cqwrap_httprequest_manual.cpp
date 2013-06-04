@@ -1,6 +1,6 @@
 #include "cqwrap_register_all_manual.h"
-#include "util/JsonHelper.h"
-#include "pattern/EventProxy.h"
+#include "../util/JsonHelper.h"
+#include "../pattern/EventProxy.h"
 
 #include "cocos-ext.h"
 

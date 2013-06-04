@@ -8,7 +8,7 @@
 #include "json.h"
 
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
 #include "cocos2d_specifics.hpp"
 
 USING_NS_CC_EXT;
@@ -303,7 +303,7 @@ static int
 		LWS_SEND_BUFFER_POST_PADDING];
 	int l;
 	
-	CCLog("socket callback for %d reason", reason);
+	//CCLog("socket callback for %d reason", reason);
 	
 	switch (reason) {
 	case LWS_CALLBACK_PROTOCOL_DESTROY:

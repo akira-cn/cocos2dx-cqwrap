@@ -11,9 +11,9 @@
 #include "cocos-ext.h"
 
 #include "libwebsockets.h"
-#include "pattern/CustEvent.h"
-#include "pattern/EventProxy.h"
-#include "util/JsonHelper.h"
+#include "../pattern/CustEvent.h"
+#include "../pattern/EventProxy.h"
+#include "../util/JsonHelper.h"
 
 #include <queue>
 #include <pthread.h>
@@ -21,7 +21,7 @@
 #include <errno.h>
 
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
 #include "cocos2d_specifics.hpp"
 
 NS_CC_EXT_BEGIN

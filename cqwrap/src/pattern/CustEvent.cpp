@@ -1,4 +1,4 @@
-#include "pattern/CustEvent.h"
+#include "../pattern/CustEvent.h"
 
 USING_NS_CC_EXT;
 

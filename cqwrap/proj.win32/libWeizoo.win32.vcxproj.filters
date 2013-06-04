@@ -35,6 +35,12 @@
     <Filter Include="src\scripting">
       <UniqueIdentifier>{12977a52-6d45-4da2-b422-083145b799ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GUI">
+      <UniqueIdentifier>{dbaf550d-2a73-4594-845c-c99ede07dd2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GUI\win32">
+      <UniqueIdentifier>{3ace3779-eea6-4315-a1c5-4f4dcab054d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\libWeizoo.ico">
@@ -134,11 +140,20 @@
     <ClCompile Include="..\src\scripting\cqwrap_websock_manual.cpp">
       <Filter>src\scripting</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\scripting\cqwrap_jstimer_manual.cpp">
-      <Filter>src\scripting</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\scripting\cqwrap_httprequest_manual.cpp">
       <Filter>src\scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\MessageDelegate.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\NativeAdapter.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scripting\cqwrap_misc_manual.cpp">
+      <Filter>src\scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GUI\win32\CCWebView.cpp">
+      <Filter>src\GUI\win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +243,15 @@
     </ClInclude>
     <ClInclude Include="..\src\pattern\EventProxy.h">
       <Filter>src\pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\MessageDelegate.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\NativeAdapter.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GUI\CCWebView.h">
+      <Filter>src\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
